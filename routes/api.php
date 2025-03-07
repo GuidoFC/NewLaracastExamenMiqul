@@ -21,6 +21,7 @@
     Route::put('autors/{id}', [AutorController::class, 'update']);
     Route::delete('autors/{id}', [AutorController::class, 'destroy']);
 
+    Route::get('/llibres/{id}/autors', [AutorHasBookController::class, 'showAllBookFromAutor']);
 
 
     Route::post('/llibres/{id}/autors/{autor_id}', [AutorHasBookController::class, 'store']);

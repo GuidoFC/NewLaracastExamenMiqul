@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Autors;
 use App\Models\Libro;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AutorHasBookController extends Controller
 {
@@ -64,9 +65,41 @@ class AutorHasBookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function showAllBookFromAutor(string $id)
     {
-        //
+
+        $autor = Autors::find($id);
+
+        if (!$autor) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No existe este autor en la base de datos'
+            ], 404);
+        }
+
+        // coger el id del autor
+
+
+        $id_autor = $autor->id;
+
+        // coger todos los libros del autor
+//        $libross =   DB::table('autor_libro')->select('id','autors_id','libro_id')->get();
+//        $libross =   DB::table('autor_libro')->select('id','autors_id','libro_id')->where('autors_id', $id_autor);
+
+        $libross = DB::table('autor_libro')
+            ->where('autors_id', '=', 1)->get();
+
+//        dd($libross);
+
+
+        return response()->json([
+            'status' => 'success',
+            'autor' => $libross
+        ]);
+
+
+
+
     }
 
     /**
