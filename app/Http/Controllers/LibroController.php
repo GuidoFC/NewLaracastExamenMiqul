@@ -121,9 +121,43 @@ class LibroController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+
+
+            $libro = Libro::find($id);
+
+            if (!$libro) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'No existe esta libro en la base de datos'
+                ], 404);
+            }
+
+
+            $request->validate([
+                'titulo' => 'required|string|unique:libros|max:25|min:3',
+
+            ], [
+                'titulo.require' => 'El titulo es oblogatorio',
+                'titulo.min' => 'El titulo debe tener min 3 caraceteres',
+                'titulo.unique' => 'El titulo debe de ser único',
+                'titulo.max' => 'El titulo debe tener como max 25 caraceteres',
+            ]);
+
+            $libro->update($request->all());
+            return response()->json($libro);
+
+
+        } catch (ValidationException $e) {
+            // Capturar error de validación y devolverlo en JSON
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Errores de validación',
+                'errors' => $e->errors(),
+            ], 422);
+        }
     }
 
     /**

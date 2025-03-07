@@ -10,7 +10,7 @@
 
     Route::get('llibres', [LibroController::class, 'index']);
     Route::get('llibres/{id}', [LibroController::class, 'show']);
-
+    Route::put('llibres/{id}', [LibroController::class, 'update']);
 
     Route::post('/autors', [AutorController::class, 'store']);
 
