@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Autors;
+use App\Models\Libro;
 use Illuminate\Http\Request;
 
 class AutorHasBookController extends Controller
@@ -25,9 +27,37 @@ class AutorHasBookController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $id, $autor_id)
     {
-        @dd("Holaaaa");
+
+        // primero recuperar el autor
+        $autor = Autors::find($autor_id);
+
+        if (!$autor) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No existe este autor en la base de datos'
+            ], 404);
+        }
+
+        // recuperar el libro
+        $libro = Libro::find($id);
+
+        if (!$libro) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No existe este libro en la base de datos'
+            ], 404);
+        }
+
+
+
+
+        return response()->json([
+            'status' => 'success',
+            'autor' => $autor,
+            'libro' => $libro
+        ]);
     }
 
     /**
