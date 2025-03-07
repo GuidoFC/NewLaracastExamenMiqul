@@ -48,9 +48,10 @@
             try {
 
                 $validated = $request->validate([
-                    'nombre' => 'required|string|max:25|min:3',
+                    'nombre' => 'required|string|max:25|min:3|unique:autors',
                 ], [
                     'nombre.require' => 'El nombre es oblogatorio',
+                    'nombre.unique' => 'El nombre del autor es único',
                     'nombre.min' => 'El nombre debe tener 3 caraceteres',
 
                     'nombre.max' => 'El contenido debe tener como max 25 caraceteres',
