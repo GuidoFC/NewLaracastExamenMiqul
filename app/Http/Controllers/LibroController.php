@@ -42,7 +42,7 @@ class LibroController extends Controller
         // Responder con el nuevo rol creado
         return response()->json([
             'status' => 'success',
-            'message' => 'Rol creado exitosamente',
+            'message' => 'Libro creado exitosamente',
             'role' => $libro
         ], 201);
 
