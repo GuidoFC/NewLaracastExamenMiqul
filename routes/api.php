@@ -13,8 +13,9 @@
     Route::put('llibres/{id}', [LibroController::class, 'update']);
     Route::delete('llibres/{id}', [LibroController::class, 'destroy']);
 
-    Route::post('/autors', [AutorController::class, 'store']);
 
+    Route::post('/autors', [AutorController::class, 'store']);
+    Route::get('autors', [AutorController::class, 'index']);
 
 
     Route::any('/', function () {
