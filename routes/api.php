@@ -3,9 +3,16 @@
 
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\LibroController;
+    use App\Http\Controllers\AutorController;
 
 
     Route::post('/llibre', [LibroController::class, 'store']);
+
+
+
+    Route::post('/autors', [AutorController::class, 'store']);
+
+
 
     Route::any('/', function () {
         return response()->json([
