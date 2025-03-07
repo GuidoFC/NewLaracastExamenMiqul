@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Libro;
 use Illuminate\Http\Request;
 
 class LibroController extends Controller
@@ -27,7 +28,24 @@ class LibroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // Validar los datos recibidos
+        $validated = $request->validate([
+            'name' => 'required|string|unique:roles|max:255',
+        ]);
+
+        // Crear el rol en la base de datos
+        $libro = Libro::create([
+            'name' => $validated['name']
+        ]);
+
+        // Responder con el nuevo rol creado
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Rol creado exitosamente',
+            'role' => $libro
+        ], 201);
+
     }
 
     /**

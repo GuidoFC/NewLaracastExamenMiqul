@@ -2,10 +2,10 @@
 
 
     use Illuminate\Support\Facades\Route;
-    use App\Http\Controllers\RoleController;
+    use App\Http\Controllers\LibroController;
 
 
-    Route::get('/roles', [RoleController::class, 'store']);
+    Route::get('/libro', [LibroController::class, 'store']);
 
     Route::any('/', function () {
         return response()->json([
