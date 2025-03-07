@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Autors;
 use App\Models\Libro;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LibroController extends Controller
 {
@@ -29,22 +31,40 @@ class LibroController extends Controller
     public function store(Request $request)
     {
 
-        // Validar los datos recibidos
-        $validated = $request->validate([
-            'titulo' => 'required|string|unique:libros|max:25',
-        ]);
 
-        // Crear el rol en la base de datos
-        $libro = Libro::create([
-            'titulo' => $validated['titulo']
-        ]);
+        try {
 
-        // Responder con el nuevo rol creado
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Libro creado exitosamente',
-            'role' => $libro
-        ], 201);
+            $validated =  $request->validate([
+                'titulo' => 'required|string|unique:libros|max:25|min:3',
+
+            ], [
+                'titulo.require' => 'El titulo es oblogatorio',
+                'titulo.min' => 'El titulo debe tener min 3 caraceteres',
+                'titulo.unique' => 'El titulo debe de ser único',
+                'titulo.max' => 'El titulo debe tener como max 25 caraceteres',
+            ]);
+
+
+            $libro = Libro::create([
+                'titulo' => $validated['titulo']
+            ]);
+
+            // Responder con el nuevo rol creado
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Libro creado exitosamente',
+                'Libro' => $libro
+            ], 201);
+
+
+        } catch (ValidationException $e) {
+            // Capturar error de validación y devolverlo en JSON
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Errores de validación',
+                'errors' => $e->errors(),
+            ], 422);
+        }
 
     }
 
