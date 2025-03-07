@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Autors;
 use App\Models\Libro;
+use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -14,8 +15,26 @@ class LibroController extends Controller
      */
     public function index()
     {
-        //
+        // Obtener todas las notas del usuario autenticado
+
+        $libro = Libro::all();
+
+        // si no tienes notas
+        if ($libro->isEmpty()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'No tienes libros aún.',
+                'notes' => $libro
+            ], 200);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'libros' => $libro
+        ]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.

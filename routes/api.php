@@ -8,6 +8,8 @@
 
     Route::post('/llibre', [LibroController::class, 'store']);
 
+    Route::get('llibres', [LibroController::class, 'index']);
+    Route::get('llibres/{id}', [LibroController::class, 'show']);
 
 
     Route::post('/autors', [AutorController::class, 'store']);
