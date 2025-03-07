@@ -152,8 +152,18 @@
         /**
          * Remove the specified resource from storage.
          */
-        public function destroy(string $id)
+        public function destroy($id)
         {
-            //
+            $autor = Autors::find($id);
+
+            if (!$autor) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'No existe este autor en la base de datos'
+                ], 404);
+            }
+
+            $autor->delete();
+            return response()->json(['message' => 'Autor eliminada correctamente']);
         }
     }

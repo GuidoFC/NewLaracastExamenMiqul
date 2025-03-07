@@ -18,6 +18,8 @@
     Route::get('autors', [AutorController::class, 'index']);
     Route::get('autors/{id}', [AutorController::class, 'show']);
     Route::put('autors/{id}', [AutorController::class, 'update']);
+    Route::delete('autors/{id}', [AutorController::class, 'destroy']);
+
 
 
 
