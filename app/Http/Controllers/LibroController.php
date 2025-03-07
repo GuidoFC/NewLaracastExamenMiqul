@@ -90,9 +90,24 @@ class LibroController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         //
+        $libro = Libro::find($id);
+
+        //
+        if (!$libro) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No existe este libro en la base de datos'
+            ], 404);
+        }
+
+        //
+        return response()->json([
+            'status' => 'success',
+            'libro' => $libro
+        ]);
     }
 
     /**
