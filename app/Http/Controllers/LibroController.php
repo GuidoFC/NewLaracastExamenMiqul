@@ -163,8 +163,18 @@ class LibroController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $libro = Libro::find($id);
+
+        if (!$libro) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No existe este libro en la base de datos'
+            ], 404);
+        }
+
+        $libro->delete();
+        return response()->json(['message' => 'Libro eliminada correctamente']);
     }
 }
