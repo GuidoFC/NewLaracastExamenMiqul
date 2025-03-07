@@ -5,7 +5,7 @@
     use App\Http\Controllers\LibroController;
 
 
-    Route::get('/libro', [LibroController::class, 'store']);
+    Route::post('/llibre', [LibroController::class, 'store']);
 
     Route::any('/', function () {
         return response()->json([

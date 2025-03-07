@@ -31,12 +31,12 @@ class LibroController extends Controller
 
         // Validar los datos recibidos
         $validated = $request->validate([
-            'name' => 'required|string|unique:roles|max:255',
+            'titulo' => 'required|string|unique:libros|max:25',
         ]);
 
         // Crear el rol en la base de datos
         $libro = Libro::create([
-            'name' => $validated['name']
+            'titulo' => $validated['titulo']
         ]);
 
         // Responder con el nuevo rol creado
