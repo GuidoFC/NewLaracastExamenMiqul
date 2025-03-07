@@ -4,6 +4,7 @@
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\LibroController;
     use App\Http\Controllers\AutorController;
+    use App\Http\Controllers\AutorHasBookController;
 
 
     Route::post('/llibre', [LibroController::class, 'store']);
@@ -20,6 +21,8 @@
     Route::put('autors/{id}', [AutorController::class, 'update']);
     Route::delete('autors/{id}', [AutorController::class, 'destroy']);
 
+
+    Route::post('/llibres/{id}/autors/{autor_id}', [AutorHasBookController::class, 'store']);
 
 
 
