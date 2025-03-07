@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Autors;
 use App\Models\Libro;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class AutorController extends Controller
 {
@@ -30,9 +31,15 @@ class AutorController extends Controller
     public function store(Request $request)
     {
 
-        // Validar los datos recibidos
-        $validated = $request->validate([
-            'nombre' => 'required|string|max:25',
+        try {
+
+        $validated =  $request->validate([
+            'nombre' => 'required|string|max:25|min:3',
+        ], [
+            'nombre.require' => 'El nombre es oblogatorio',
+            'nombre.min' => 'El nombre debe tener 3 caraceteres',
+
+            'nombre.max' => 'El contenido debe tener como max 25 caraceteres',
         ]);
 
         // Crear el rol en la base de datos
@@ -44,9 +51,16 @@ class AutorController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Autor creado exitosamente',
-            'role' => $autor
+            'autor' => $autor
         ], 201);
-
+        } catch (ValidationException $e) {
+            // Capturar error de validación y devolverlo en JSON
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Errores de validación',
+                'errors' => $e->errors(),
+            ], 422);
+        }
     }
 
     /**
