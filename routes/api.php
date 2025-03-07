@@ -16,6 +16,8 @@
 
     Route::post('/autors', [AutorController::class, 'store']);
     Route::get('autors', [AutorController::class, 'index']);
+    Route::get('autors/{id}', [AutorController::class, 'show']);
+
 
 
     Route::any('/', function () {

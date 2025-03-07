@@ -80,9 +80,24 @@
         /**
          * Display the specified resource.
          */
-        public function show(string $id)
+        public function show($id)
         {
             //
+            $autor = Autors::find($id);
+
+            //
+            if (!$autor) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'No existe este autor en la base de datos'
+                ], 404);
+            }
+
+            //
+            return response()->json([
+                'status' => 'success',
+                'autor' => $autor
+            ]);
         }
 
         /**
