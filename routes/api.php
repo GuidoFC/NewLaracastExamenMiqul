@@ -21,8 +21,13 @@
     Route::put('autors/{id}', [AutorController::class, 'update']);
     Route::delete('autors/{id}', [AutorController::class, 'destroy']);
 
-    Route::get('/llibres/{id}/autors', [AutorHasBookController::class, 'showAllBookFromAutor']);
-    Route::get('/autors/{id}/llibres', [AutorHasBookController::class, 'showAllAutorFromBook']);
+    // GET /api/llibres/{id}/autors Retorna tots els autors d'un llibre.
+    // Le pasas el ID de un libro y te devuelve todos los autores de ese libro
+    Route::get('/llibres/{id}/autors', [AutorHasBookController::class, 'getAllAuthorFromThisBook']);
+
+
+    // GET /api/autors/{id}/llibres Retorna tots els llibres d'un autor
+    Route::get('/autors/{id}/llibres', [AutorHasBookController::class, 'obtenerTodosLosLibrosAutor']);
 
 
     Route::post('/llibres/{id}/autors/{autor_id}', [AutorHasBookController::class, 'store']);

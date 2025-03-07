@@ -65,45 +65,12 @@ class AutorHasBookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showAllBookFromAutor(string $id)
+
+//     // Le pasas el ID de un libro y te devuelve todos los autores de ese libro
+    public function getAllAuthorFromThisBook(string $id)
     {
 
-        $autor = Autors::find($id);
-
-        if (!$autor) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'No existe este autor en la base de datos'
-            ], 404);
-        }
-
-        // coger el id del autor
-
-
-        $id_autor = $autor->id;
-
-        // coger todos los libros del autor
-//        $libross =   DB::table('autor_libro')->select('id','autors_id','libro_id')->get();
-//        $libross =   DB::table('autor_libro')->select('id','autors_id','libro_id')->where('autors_id', $id_autor);
-
-        $libross = DB::table('autor_libro')
-            ->where('autors_id', '=', $id_autor)->get();
-
-//        dd($libross);
-
-
-        return response()->json([
-            'status' => 'success',
-            'autor' => $libross
-        ]);
-
-
-
-
-    }
-
-    public function showAllAutorFromBook(string $id)
-    {
+        // cojo el libro
 
         $libro = Libro::find($id);
 
@@ -119,16 +86,56 @@ class AutorHasBookController extends Controller
 
         $id_libro = $libro->id;
 
+        // coger todos los libros del autor
+//        $libross =   DB::table('autor_libro')->select('id','autors_id','libro_id')->get();
+//        $libross =   DB::table('autor_libro')->select('id','autors_id','libro_id')->where('autors_id', $id_autor);
 
-        $autores = DB::table('autor_libro')
-            ->where('autors_id', '=', $id_libro)->get();
+        $libross = DB::table('autor_libro')
+            ->where('libro_id', '=', $id_libro)->get();
 
 //        dd($libross);
 
 
         return response()->json([
             'status' => 'success',
-            'autor' => $autores
+            'autor' => $libross
+        ]);
+
+
+
+
+    }
+
+    public function obtenerTodosLosLibrosAutor(string $id)
+    {
+
+        // Tengo que buscar el autor
+
+        $autor = Autors::find($id);
+
+        if (!$autor) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No existe este autor en la base de datos'
+            ], 404);
+        }
+
+        // coger el id del autor
+
+
+        $id_autor = $autor->id;
+
+        $libross = DB::table('autor_libro')
+            ->where('autors_id', '=', $id_autor)->get();
+
+
+
+//        dd($libross);
+
+
+        return response()->json([
+            'status' => 'success',
+            'autor' => $libross
         ]);
 
 
