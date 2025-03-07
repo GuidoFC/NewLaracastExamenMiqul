@@ -1,21 +1,21 @@
 name: examenmiquel
 services:
-    mysqlmiq:
-        image: mysql:9.2
-        env_file:
-            - .env.mysql
-        volumes:
-            - data-mysql-examenmiquelGuido:/var/lib/mysql
-        ports:
-            - "3310:3306"
-    phpmyadminmiq:
-        image: phpmyadmin:5.2-apache
-        ports:
-            - "90:80"
-        depends_on:
-            - mysqlmiq
-        env_file:
-            - .env.mysql
+  mysql:
+    image: mysql:9.2
+    env_file:
+      - .env.mysql
+    volumes:
+      - data-mysql-examenmiquel:/var/lib/mysql
+    ports:
+      - "3309:3306"
+  phpmyadmin:
+    image: phpmyadmin:5.2-apache
+    ports:
+      - "89:80"
+    depends_on:
+      - mysql
+    env_file:
+      - .env.mysql
 
 volumes:
-    data-mysql-examenmiquelGuido:
+  data-mysql-examenmiquel:
