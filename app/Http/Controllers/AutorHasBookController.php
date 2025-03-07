@@ -51,7 +51,8 @@ class AutorHasBookController extends Controller
         }
 
 
-
+        // Asignar el autor al llibre
+        $libro->autors()->attach($autor_id);
 
         return response()->json([
             'status' => 'success',
