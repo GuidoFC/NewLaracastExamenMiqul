@@ -111,9 +111,42 @@
         /**
          * Update the specified resource in storage.
          */
-        public function update(Request $request, string $id)
+        public function update(Request $request, $id)
         {
-            //
+            try {
+
+
+                $autor = Autors::find($id);
+
+                if (!$autor) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'No existe este autor en la base de datos'
+                    ], 404);
+                }
+
+
+                $request->validate([
+                    'nombre' => 'required|string|max:25|min:3',
+                ], [
+                    'nombre.require' => 'El nombre es oblogatorio',
+                    'nombre.min' => 'El nombre debe tener 3 caraceteres',
+
+                    'nombre.max' => 'El contenido debe tener como max 25 caraceteres',
+                ]);
+
+                $autor->update($request->all());
+                return response()->json($autor);
+
+
+            } catch (ValidationException $e) {
+                // Capturar error de validación y devolverlo en JSON
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Errores de validación',
+                    'errors' => $e->errors(),
+                ], 422);
+            }
         }
 
         /**
