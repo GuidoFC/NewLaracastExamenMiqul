@@ -88,8 +88,32 @@ class AutorHasBookController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, $id, $autor_id)
     {
-        //
+        // primero recuperar el autor
+        $autor = Autors::find($autor_id);
+
+        if (!$autor) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No existe este autor en la base de datos'
+            ], 404);
+        }
+
+        // recuperar el libro
+        $libro = Libro::find($id);
+
+        if (!$libro) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No existe este libro en la base de datos'
+            ], 404);
+        }
+
+        // delete book
+        $libro->autors()->detach($autor_id);
+
+
+        return response()->json(['message' => 'Libro con Autor eliminado correctamente']);
     }
 }
