@@ -87,7 +87,7 @@ class AutorHasBookController extends Controller
 //        $libross =   DB::table('autor_libro')->select('id','autors_id','libro_id')->where('autors_id', $id_autor);
 
         $libross = DB::table('autor_libro')
-            ->where('autors_id', '=', 1)->get();
+            ->where('autors_id', '=', $id_autor)->get();
 
 //        dd($libross);
 
@@ -95,6 +95,40 @@ class AutorHasBookController extends Controller
         return response()->json([
             'status' => 'success',
             'autor' => $libross
+        ]);
+
+
+
+
+    }
+
+    public function showAllAutorFromBook(string $id)
+    {
+
+        $libro = Libro::find($id);
+
+        if (!$libro) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No existe este libro en la base de datos'
+            ], 404);
+        }
+
+        // coger el id del autor
+
+
+        $id_libro = $libro->id;
+
+
+        $autores = DB::table('autor_libro')
+            ->where('autors_id', '=', $id_libro)->get();
+
+//        dd($libross);
+
+
+        return response()->json([
+            'status' => 'success',
+            'autor' => $autores
         ]);
 
 
